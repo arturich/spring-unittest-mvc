@@ -45,4 +45,11 @@ public class StudentAndGradeService {
 		
 	}
 
+	public Iterable<CollegeStudent> getGradebook() {
+		
+		Iterable<CollegeStudent> collegeStudents = studentDao.findAll();
+		
+		return collegeStudents;
+	}
+
 }

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.luv2code.springmvc.models.CollegeStudent;
 import com.luv2code.springmvc.repository.StudentDao;
@@ -84,6 +87,24 @@ class StudentAndGradeServiceTest {
 		
 		assertFalse(studentService.checkIfStudentIsNull(id));
 	}
+	
+	@Sql("/insertData.sql")
+	@Test
+	public void getGradebookService()
+	{
+		Iterable<CollegeStudent> iterableCollageStudents = studentService.getGradebook();
+		
+		List<CollegeStudent> collegeStudents = new ArrayList<>();
+		
+		for(CollegeStudent collegeStudent : iterableCollageStudents)
+		{
+			collegeStudents.add(collegeStudent);
+		}
+		
+		assertEquals(5,collegeStudents.size());
+		
+	}
+	
 	
 	
 	@AfterEach
